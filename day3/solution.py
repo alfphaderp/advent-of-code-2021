@@ -10,25 +10,20 @@ def part1(lines):
     return int(gamma, 2) * int(epsilon, 2)
 
 def part2(lines):
-    o2_candidates = lines
-    for i in range(len(lines[0])):
-        frequent_bit = most_frequent_bit([l[i] for l in o2_candidates])
-        keep_bit = '0' if frequent_bit == '0' else '1'
-        o2_candidates = [c for c in o2_candidates if c[i] == keep_bit]
-    o2_rating = int(''.join(o2_candidates[0]), 2)
-    
-    co2_candidates = lines
-    for i in range(len(lines[0])):
-        if len(co2_candidates) == 1:
-            co2_rating = int(''.join(co2_candidates[0]), 2)
-            break
-        frequent_bit = most_frequent_bit([l[i] for l in co2_candidates])
-        keep_bit = '1' if frequent_bit == '0' else '0'
-        co2_candidates = [c for c in co2_candidates if c[i] == keep_bit]
-    if len(co2_candidates) == 1:
-        co2_rating = int(''.join(co2_candidates[0]), 2)
-    
-    return o2_rating * co2_rating
+    o2_choices, co2_choices = [int(l, 2) for l in lines], [int(l, 2) for l in lines]
+    mask = 1 << len(lines[0]) - 1
+    while mask > 0:
+        if len(o2_choices) > 1:
+            set_choices = [c for c in o2_choices if c & mask]
+            unset_choices = [c for c in o2_choices if not c & mask]
+            o2_choices = set_choices if len(set_choices) >= len(unset_choices) else unset_choices
+        if len(co2_choices) > 1:
+            set_choices = [c for c in co2_choices if c & mask]
+            unset_choices = [c for c in co2_choices if not c & mask]
+            co2_choices = unset_choices if len(set_choices) >= len(unset_choices) else set_choices
+        mask >>= 1
+    # assert len(o2_choices) == 1 and len(co2_choices) == 1
+    return int(o2_choices[0]) * int(co2_choices[0])
 
 if __name__ == '__main__':
     file = 'input.txt'
