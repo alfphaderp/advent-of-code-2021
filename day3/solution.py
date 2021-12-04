@@ -1,9 +1,3 @@
-def most_frequent_bit(num):
-    zeroes, ones = num.count('0'), num.count('1')
-    if zeroes == ones:
-        return None
-    return '0' if zeroes > ones else '1'
-
 def part1(lines):    
     gamma = ''.join('1' if col.count('1') > col.count('0') else '0' for col in zip(*lines))
     epsilon = ''.join('0' if bit == '1' else '1' for bit in gamma)
@@ -22,7 +16,6 @@ def part2(lines):
             unset_choices = [c for c in co2_choices if not c & mask]
             co2_choices = unset_choices if len(set_choices) >= len(unset_choices) else set_choices
         mask >>= 1
-    # assert len(o2_choices) == 1 and len(co2_choices) == 1
     return int(o2_choices[0]) * int(co2_choices[0])
 
 if __name__ == '__main__':
