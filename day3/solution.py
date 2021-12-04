@@ -5,10 +5,9 @@ def most_frequent_bit(num):
     return '0' if zeroes > ones else '1'
 
 def part1(lines):    
-    gamma = ''.join(most_frequent_bit(col) for col in zip(*lines))
+    gamma = ''.join('1' if col.count('1') > col.count('0') else '0' for col in zip(*lines))
     epsilon = ''.join('0' if bit == '1' else '1' for bit in gamma)
-    gamma, epsilon = int(gamma, 2), int(epsilon, 2)
-    return gamma * epsilon
+    return int(gamma, 2) * int(epsilon, 2)
 
 def part2(lines):
     o2_candidates = lines
