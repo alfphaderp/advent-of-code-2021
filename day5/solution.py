@@ -9,15 +9,16 @@ def part2(lines):
 def solve(lines, diagonals=True):
     vents = defaultdict(lambda: 0)
     for line in lines:
-        a, b, c, d = [*line[0], *line[1]]
-        if not diagonals and a != c and b != d:
+        start_x, start_y, end_x, end_y = *line[0], *line[1]
+        if not diagonals and start_x != end_x and start_y != end_y:
             continue
-        dx = 1 if a < c else -1 if a > c else 0
-        dy = 1 if b < d else -1 if b > d else 0
-        for _ in range(max(abs(a - c), abs(b - d)) + 1):
-            vents[a, b] += 1
-            a += dx
-            b += dy
+        dx = 1 if start_x < end_x else -1 if start_x > end_x else 0
+        dy = 1 if start_y < end_y else -1 if start_y > end_y else 0
+        x, y = start_x, start_y
+        for _ in range(max(abs(start_x - end_x), abs(start_y - end_y)) + 1):
+            vents[x, y] += 1
+            x += dx
+            y += dy
     return sum(1 for v in vents.values() if v >= 2)
 
 import copy
