@@ -1,20 +1,20 @@
 def part1(positions):
     fuel_func = lambda target: sum(abs(target - p) for p in positions)
-    target_pos = find_optimal_target_bs(positions, fuel_func)
+    target_pos = find_optimal_target_binary_search(positions, fuel_func)
     return fuel_func(target_pos)
     
 def part2(positions):
     fuel_func = lambda target: sum(triangular(abs(target - p)) for p in positions)
-    target_pos = find_optimal_target_bs(positions, fuel_func)
+    target_pos = find_optimal_target_binary_search(positions, fuel_func)
     return fuel_func(target_pos)
 
 def triangular(n):
     return n * (n + 1) // 2
 
-def find_optimal_target_bf(positions, fuel_func):
+def find_optimal_target_brute_force(positions, fuel_func):
     return min(range(min(positions), max(positions)), key=fuel_func)
 
-def find_optimal_target_bs(positions, fuel_func):
+def find_optimal_target_binary_search(positions, fuel_func):
     lower_bound, upper_bound = min(positions), max(positions)
     best_target, best_fuel = float('inf'), float('inf')
     while lower_bound < upper_bound:

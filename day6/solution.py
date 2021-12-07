@@ -14,7 +14,7 @@ def solve_queue(nums, days):
         timers[6] += timers[-1]
     return sum(timers)
 
-def solve_dp(nums, days):
+def solve_dynamic_programming(nums, days):
     @lru_cache(None)
     def count_forks(timer, days):
         if days == 0:
