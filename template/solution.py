@@ -15,6 +15,7 @@ if __name__ == '__main__':
     file = 'input_sample.txt'
     with open(file, 'r') as f:
         lines = f.read().splitlines()
+        f.close()
     lines = parse(lines)
     print(part1(copy.deepcopy(lines)))
     print(part2(copy.deepcopy(lines)))
