@@ -19,7 +19,8 @@ day = int(args[1])
 if not 1 <= day <= 25:
     print(f'Error: {day} is not a valid day!')
     exit()
-if not Path(f'./day{day}/').is_dir():
+input_path = f'./day{day}/' if day >= 10 else f'./day0{day}/'
+if not Path(input_path).is_dir():
     print(f'Error: input file for day {day} has not been created!')
     exit()
 
@@ -33,7 +34,7 @@ try:
     request = Request(url, headers=headers)
     puzzle_input = urlopen(request).read().decode('ascii')
 
-    with open(f'./day{day}/input.txt', 'w') as f:
+    with open(input_path + 'input.txt', 'w') as f:
         f.write(puzzle_input)
         f.close()
     print(f'Successfully retrieved puzzle input for day {day}!')
