@@ -12,7 +12,7 @@ import copy
 
 if __name__ == '__main__':
     file = 'input.txt'
-    # file = 'input_sample.txt'
+    file = 'input_sample.txt'
     with open(file, 'r') as f:
         lines = f.read().splitlines()
     lines = parse(lines)
