@@ -1,4 +1,4 @@
-from collections import defaultdict
+from collections import defaultdict, deque
 
 def part1(edges):
     return dfs(edges, allow_lower_dupe=False)
@@ -14,13 +14,25 @@ def dfs(edges, path=['start'], allow_lower_dupe=False):
         elif adj == 'end':
             total_paths += 1
         elif adj.isupper() or adj not in path:
-            path.append(adj)
-            total_paths += dfs(edges, path, allow_lower_dupe)
-            path.pop(-1)
+            total_paths += dfs(edges, path + [adj], allow_lower_dupe)
         elif allow_lower_dupe:
-            path.append(adj)
-            total_paths += dfs(edges, path, False)
-            path.pop(-1)
+            total_paths += dfs(edges, path + [adj], False)
+    return total_paths
+
+def bfs(edges, allow_lower_dupe=False):
+    total_paths = 0
+    q = deque([[['start'], allow_lower_dupe]])
+    while q:
+        path, allow_lower_dupe = q.popleft()
+        for adj in edges[path[-1]]:
+            if adj == 'start':
+                continue
+            elif adj == 'end':
+                total_paths += 1
+            elif adj.isupper() or adj not in path:
+                q.append([path + [adj], allow_lower_dupe])
+            elif allow_lower_dupe:
+                q.append([path + [adj], False])
     return total_paths
 
 def parse(lines):
